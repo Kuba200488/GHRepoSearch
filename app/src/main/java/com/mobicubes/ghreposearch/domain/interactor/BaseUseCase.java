@@ -32,7 +32,7 @@ public abstract class BaseUseCase<P, R> {
         disposable = resultObserver;
 
         observable = buildObservable(param)
-                .subscribeOn(Schedulers.newThread())
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnTerminate(() -> observable = null);
 

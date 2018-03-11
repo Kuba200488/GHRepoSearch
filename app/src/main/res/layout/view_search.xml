@@ -4,6 +4,7 @@
     xmlns:bind="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.mobicubes.ghreposearch.presentation.search.view.viewmodel.SearchViewModel"/>
@@ -29,6 +30,13 @@
             android:layout_height="wrap_content"
             android:text="@={viewModel.query}"
             bind:onTextChanged="@{() -> listener.onQueryChanged(viewModel.query)}" />
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            bind:adapter="@{viewModel.adapter}"
+            app:layoutManager="android.support.v7.widget.LinearLayoutManager"/>
 
     </LinearLayout>
 </layout>

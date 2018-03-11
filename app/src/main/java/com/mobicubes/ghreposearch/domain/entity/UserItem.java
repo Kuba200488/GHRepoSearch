@@ -9,19 +9,19 @@ import com.mobicubes.ghreposearch.util.Preconditions;
  * Created by kuba on 10/03/2018.
  */
 
-public class Repository {
+public class UserItem {
 
     @NonNull
     private final Long id;
     @NonNull
-    private final String name;
+    private final String login;
     @Nullable
-    private final String description;
+    private final String avatarUrl;
 
-    private Repository(Builder builder) {
+    private UserItem(Builder builder) {
         id = Preconditions.checkNotNull(builder.id);
-        name = Preconditions.checkNotEmpty(builder.name);
-        description = builder.description;
+        login = Preconditions.checkNotEmpty(builder.login);
+        avatarUrl = builder.avatarUrl;
     }
 
     @NonNull
@@ -30,13 +30,13 @@ public class Repository {
     }
 
     @NonNull
-    public String getName() {
-        return name;
+    public String getLogin() {
+        return login;
     }
 
     @Nullable
-    public String getDescription() {
-        return description;
+    public String getAvatarUrl() {
+        return avatarUrl;
     }
 
     @Override
@@ -44,20 +44,21 @@ public class Repository {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Repository that = (Repository) o;
+        UserItem user = (UserItem) o;
 
-        if (!id.equals(that.id)) return false;
-        if (!name.equals(that.name)) return false;
-        return description != null ? description.equals(that.description) : that.description == null;
+        if (!id.equals(user.id)) return false;
+        if (!login.equals(user.login)) return false;
+        return avatarUrl != null ? avatarUrl.equals(user.avatarUrl) : user.avatarUrl == null;
     }
 
     @Override
     public int hashCode() {
         int result = id.hashCode();
-        result = 31 * result + name.hashCode();
-        result = 31 * result + (description != null ? description.hashCode() : 0);
+        result = 31 * result + login.hashCode();
+        result = 31 * result + (avatarUrl != null ? avatarUrl.hashCode() : 0);
         return result;
     }
+
 
     public static Builder newBuilder() {
         return new Builder();
@@ -65,8 +66,8 @@ public class Repository {
 
     public static final class Builder {
         private Long id;
-        private String name;
-        private String description;
+        private String login;
+        private String avatarUrl;
 
         private Builder() {
         }
@@ -76,18 +77,18 @@ public class Repository {
             return this;
         }
 
-        public Builder withName(String val) {
-            name = val;
+        public Builder withLogin(String val) {
+            login = val;
             return this;
         }
 
-        public Builder withDescription(String val) {
-            description = val;
+        public Builder withAvatarUrl(String val) {
+            avatarUrl = val;
             return this;
         }
 
-        public Repository build() {
-            return new Repository(this);
+        public UserItem build() {
+            return new UserItem(this);
         }
     }
 }

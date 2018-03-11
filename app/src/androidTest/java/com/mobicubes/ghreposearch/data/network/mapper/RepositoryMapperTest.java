@@ -2,12 +2,16 @@ package com.mobicubes.ghreposearch.data.network.mapper;
 
 import android.support.test.runner.AndroidJUnit4;
 
+import com.mobicubes.ghreposearch.data.network.entity.RepositoriesResponseJson;
 import com.mobicubes.ghreposearch.data.network.entity.RepositoryJson;
-import com.mobicubes.ghreposearch.domain.entity.Repository;
+import com.mobicubes.ghreposearch.domain.entity.RepositoryItem;
 
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
@@ -29,12 +33,19 @@ public final class RepositoryMapperTest {
                 .withDescription(TEST_DESCRIPTION);
     }
 
+    private static RepositoryItem.Builder provideExpectedItemBuilder() {
+        return RepositoryItem.newBuilder()
+                .withId(TEST_ID)
+                .withName(TEST_NAME)
+                .withDescription(TEST_DESCRIPTION);
+    }
+
     @Test
     public void shouldProperlyMapJsonToDomain() {
 
         final RepositoryJson repositoryJson = provideTestJsonBuilder().build();
 
-        final Repository expected = Repository.newBuilder()
+        final RepositoryItem expected = RepositoryItem.newBuilder()
                 .withId(TEST_ID)
                 .withName(TEST_NAME)
                 .withDescription(TEST_DESCRIPTION)
@@ -83,5 +94,31 @@ public final class RepositoryMapperTest {
         } catch (RuntimeException e) {
             // success
         }
+    }
+
+    @Test
+    public void shouldIgnoreInvalidItems() {
+        final RepositoriesResponseJson repositoriesResponseJson =
+                RepositoriesResponseJson.newBuilder()
+                        .withTotalCount(5L)
+                        .withIncompleteResults(false)
+                        .withItems(Arrays.asList(
+                                provideTestJsonBuilder().build(),
+                                provideTestJsonBuilder().withId(null).build(),
+                                provideTestJsonBuilder().build(),
+                                provideTestJsonBuilder().withName("").build(),
+                                provideTestJsonBuilder().withName(null).build()
+                        ))
+                        .build();
+
+        final List<RepositoryItem> expectedList = RepositoryMapper.mapList(repositoriesResponseJson);
+
+        Assert.assertArrayEquals(
+                Arrays.asList(
+                        provideExpectedItemBuilder().build(),
+                        provideExpectedItemBuilder().build()
+                ).toArray(),
+                expectedList.toArray()
+        );
     }
 }

@@ -1,7 +1,8 @@
 package com.mobicubes.ghreposearch.di;
 
 import com.mobicubes.ghreposearch.MyApplication;
-import com.mobicubes.ghreposearch.presentation.search.MainActivity;
+import com.mobicubes.ghreposearch.presentation.search.di.SearchActivityComponent;
+import com.mobicubes.ghreposearch.presentation.search.di.SearchActivityModule;
 
 import javax.inject.Singleton;
 
@@ -19,5 +20,5 @@ import dagger.Component;
 public interface AppComponent {
     void inject(MyApplication application);
 
-    void inject(MainActivity mainActivity);
+    SearchActivityComponent plus(SearchActivityModule module);
 }

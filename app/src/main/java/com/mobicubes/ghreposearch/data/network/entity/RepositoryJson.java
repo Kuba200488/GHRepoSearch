@@ -24,6 +24,9 @@ public class RepositoryJson {
     @JsonProperty("description")
     private String description;
 
+    @JsonProperty("stargazers_count")
+    private Long starCount;
+
     @JsonIgnore
     public Long getId() {
         return id;
@@ -39,12 +42,17 @@ public class RepositoryJson {
         return description;
     }
 
+    public Long getStarCount() {
+        return starCount;
+    }
+
     // builder only for test purposes --------------------------
 
     private RepositoryJson(Builder builder) {
         id = builder.id;
         name = builder.name;
         description = builder.description;
+        starCount = builder.starCount;
     }
 
     public static Builder newBuilder() {
@@ -55,6 +63,7 @@ public class RepositoryJson {
         private Long id;
         private String name;
         private String description;
+        private Long starCount;
 
         private Builder() {
         }
@@ -71,6 +80,11 @@ public class RepositoryJson {
 
         public Builder withDescription(String val) {
             description = val;
+            return this;
+        }
+
+        public Builder withStarCount(Long val) {
+            starCount = val;
             return this;
         }
 

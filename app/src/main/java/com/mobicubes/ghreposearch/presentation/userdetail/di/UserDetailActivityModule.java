@@ -2,6 +2,8 @@ package com.mobicubes.ghreposearch.presentation.userdetail.di;
 
 import android.support.annotation.NonNull;
 
+import com.mobicubes.ghreposearch.domain.interactor.GetFollowersCountUseCase;
+import com.mobicubes.ghreposearch.domain.interactor.GetStarsCountUseCase;
 import com.mobicubes.ghreposearch.presentation.userdetail.UserDetailActivity;
 import com.mobicubes.ghreposearch.presentation.userdetail.param.UserDetailParam;
 import com.mobicubes.ghreposearch.presentation.userdetail.presenter.UserDetailPresenter;
@@ -36,8 +38,10 @@ public class UserDetailActivityModule {
     @Provides
     public UserDetailPresenter providePresenter(
             @NonNull final UserDetailView view,
-            @NonNull final UserDetailParam param
+            @NonNull final UserDetailParam param,
+            @NonNull final GetFollowersCountUseCase getFollowersCountUseCase,
+            @NonNull final GetStarsCountUseCase getStarsCountUseCase
     ) {
-        return new UserDetailPresenter(view, param);
+        return new UserDetailPresenter(view, param, getFollowersCountUseCase, getStarsCountUseCase);
     }
 }

@@ -20,4 +20,10 @@ public interface Repository {
 
     @NonNull
     Observable<List<RepositoryItem>> searchRepositories(@NonNull String query);
+
+    @NonNull
+    Observable<Long> getFollowersCount(@NonNull String login);
+
+    @NonNull
+    Observable<Long> getUserRepositoriesStarCount(@NonNull String login);
 }

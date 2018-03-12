@@ -5,6 +5,8 @@ import android.support.annotation.NonNull;
 import com.mobicubes.ghreposearch.BuildConfig;
 import com.mobicubes.ghreposearch.data.RepositoryImpl;
 import com.mobicubes.ghreposearch.data.network.Service;
+import com.mobicubes.ghreposearch.domain.interactor.GetFollowersCountUseCase;
+import com.mobicubes.ghreposearch.domain.interactor.GetStarsCountUseCase;
 import com.mobicubes.ghreposearch.domain.interactor.SearchRepositoriesUseCase;
 import com.mobicubes.ghreposearch.domain.interactor.SearchUsersUseCase;
 import com.mobicubes.ghreposearch.domain.repository.Repository;
@@ -81,5 +83,21 @@ public class NetworkModule {
             @NonNull final Repository repository
     ) {
         return new SearchRepositoriesUseCase(repository);
+    }
+
+    @Provides
+    @Singleton
+    public GetFollowersCountUseCase provideGetFollowersCountUseCase(
+            @NonNull final Repository repository
+    ) {
+        return new GetFollowersCountUseCase(repository);
+    }
+
+    @Provides
+    @Singleton
+    public GetStarsCountUseCase provideGetUserStarsCountUseCase(
+            @NonNull final Repository repository
+    ) {
+        return new GetStarsCountUseCase(repository);
     }
 }

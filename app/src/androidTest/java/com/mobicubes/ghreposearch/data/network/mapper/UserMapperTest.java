@@ -20,7 +20,7 @@ import static org.junit.Assert.assertEquals;
  */
 
 @RunWith(AndroidJUnit4.class)
-public class UserItemMapperTest {
+public class UserMapperTest {
 
     private static final Long TEST_ID = 1234L;
     private static final String TEST_LOGIN = "login";
@@ -111,7 +111,7 @@ public class UserItemMapperTest {
                         ))
                         .build();
 
-        final List<UserItem> expectedList = UserMapper.mapList(usersResponseJson);
+        final List<UserItem> expectedList = UserMapper.mapListFromUsersResponse(usersResponseJson);
 
         Assert.assertArrayEquals(
                 Arrays.asList(
@@ -120,5 +120,18 @@ public class UserItemMapperTest {
                 ).toArray(),
                 expectedList.toArray()
         );
+    }
+
+    @Test
+    public void shouldProperlyCountItems() {
+        final List<UserJson> jsonList = Arrays.asList(
+                provideTestJsonBuilder().build(),
+                provideTestJsonBuilder().build(),
+                provideTestJsonBuilder().build(),
+                provideTestJsonBuilder().build(),
+                provideTestJsonBuilder().build()
+        );
+
+        Assert.assertTrue(5L == UserMapper.mapListToCount(jsonList));
     }
 }

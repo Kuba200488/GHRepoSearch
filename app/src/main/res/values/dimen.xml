@@ -3,9 +3,11 @@
     <dimen name="item_padding">16dp</dimen>
     <dimen name="item_title_text_size">16sp</dimen>
 
+    <dimen name="user_detail_avatar_top_margin">32dp</dimen>
     <dimen name="user_detail_avatar_size">160dp</dimen>
     <dimen name="user_detail_name_text_size">24sp</dimen>
-    <dimen name="user_detail_avatar_top_margin">32dp</dimen>
+    <dimen name="user_detail_label_size">16sp</dimen>
+    <dimen name="user_detail_followers_count_size">24sp</dimen>
 
     <dimen name="content_padding">16dp</dimen>
 </resources>

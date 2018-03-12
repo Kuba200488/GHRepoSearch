@@ -34,13 +34,27 @@ public class RepositoryImpl implements Repository {
     @Override
     public Observable<List<UserItem>> searchUsers(@NonNull final String query) {
         return service.searchUsers(HEADER_MAP, query)
-                .map(UserMapper::mapList);
+                .map(UserMapper::mapListFromUsersResponse);
     }
 
     @NonNull
     @Override
     public Observable<List<RepositoryItem>> searchRepositories(@NonNull final String query) {
         return service.searchRepositories(HEADER_MAP, query)
-                .map(RepositoryMapper::mapList);
+                .map(RepositoryMapper::mapListFromRepositoriesResponse);
+    }
+
+    @NonNull
+    @Override
+    public Observable<Long> getFollowersCount(@NonNull final String login) {
+        return service.getFollowers(login)
+                .map(UserMapper::mapListToCount);
+    }
+
+    @NonNull
+    @Override
+    public Observable<Long> getUserRepositoriesStarCount(@NonNull String login) {
+        return service.getUserRepositories(login)
+                .map(RepositoryMapper::mapListToStarsCount);
     }
 }

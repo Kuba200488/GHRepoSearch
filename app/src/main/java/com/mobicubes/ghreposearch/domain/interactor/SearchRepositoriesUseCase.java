@@ -22,7 +22,7 @@ public class SearchRepositoriesUseCase extends BaseUseCase<String, List<Reposito
     }
 
     @Override
-    protected Observable<List<RepositoryItem>> buildObservable(String query) {
+    protected Observable<List<RepositoryItem>> buildObservable(@NonNull final String query) {
         return repository.searchRepositories(query);
     }
 }

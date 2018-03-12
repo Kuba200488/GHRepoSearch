@@ -15,14 +15,15 @@ import io.reactivex.Observable;
 
 public class SearchUsersUseCase extends BaseUseCase<String, List<UserItem>> {
 
-    @NonNull private final Repository repository;
+    @NonNull
+    private final Repository repository;
 
     public SearchUsersUseCase(@NonNull Repository repository) {
         this.repository = repository;
     }
 
     @Override
-    protected Observable<List<UserItem>> buildObservable(String query) {
+    protected Observable<List<UserItem>> buildObservable(@NonNull final String query) {
         return repository.searchUsers(query);
     }
 }

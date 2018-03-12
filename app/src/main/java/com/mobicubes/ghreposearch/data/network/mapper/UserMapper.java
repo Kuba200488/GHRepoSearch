@@ -30,8 +30,13 @@ public class UserMapper {
     }
 
     @NonNull
-    public static List<UserItem> mapList(@NonNull final UsersResponseJson json) {
-        return Stream.of(json.getItems())
+    public static List<UserItem> mapListFromUsersResponse(@NonNull final UsersResponseJson json) {
+        return mapList(json.getItems());
+    }
+
+    @NonNull
+    public static List<UserItem> mapList(@NonNull final List<UserJson> jsonList) {
+        return Stream.ofNullable(jsonList)
                 .withoutNulls()
                 .map(userJson -> {
                     try {
@@ -42,5 +47,12 @@ public class UserMapper {
                 })
                 .withoutNulls()
                 .toList();
+    }
+
+    @NonNull
+    public static Long mapListToCount(@NonNull final List<UserJson> jsonList) {
+        return Stream.of(jsonList)
+                .withoutNulls()
+                .count();
     }
 }

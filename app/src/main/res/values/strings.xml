@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">GHRepoSearch</string>
+    <string name="user_detail_followers_label">Followers:</string>
+    <string name="user_detail_stars_label">Stars:</string>
 </resources>

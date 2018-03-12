@@ -5,6 +5,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="viewModel"
             type="com.mobicubes.ghreposearch.presentation.userdetail.view.viewmodel.UserDetailViewModel" />
@@ -27,17 +29,85 @@
             bind:loadUrl="@{viewModel.imageUrl}" />
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/login"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
             android:layout_marginTop="@dimen/content_padding"
             android:text="@{viewModel.name}"
             android:textSize="@dimen/user_detail_name_text_size"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+        <TextView
+            android:id="@+id/followers_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/content_padding"
+            android:text="@string/user_detail_followers_label"
+            android:textSize="@dimen/user_detail_label_size"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/login" />
+
+        <FrameLayout
+            android:id="@+id/followers_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/followers_label">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@{viewModel.followersCountText}"
+                android:textSize="@dimen/user_detail_followers_count_size"
+                android:textStyle="bold"
+                android:visibility="@{viewModel.followersCount == null ? View.INVISIBLE : View.VISIBLE}" />
+
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:visibility="@{viewModel.followersCount == null ? View.VISIBLE : View.INVISIBLE}" />
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/stars_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/content_padding"
+            android:text="@string/user_detail_stars_label"
+            android:textSize="@dimen/user_detail_label_size"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/followers_layout" />
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/stars_label">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@{viewModel.starsCountText}"
+                android:textSize="@dimen/user_detail_followers_count_size"
+                android:textStyle="bold"
+                android:visibility="@{viewModel.starsCount == null ? View.INVISIBLE : View.VISIBLE}" />
+
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:visibility="@{viewModel.starsCount == null ? View.VISIBLE : View.INVISIBLE}" />
+        </FrameLayout>
 
     </android.support.constraint.ConstraintLayout>
 </layout>

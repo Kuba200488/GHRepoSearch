@@ -21,16 +21,23 @@ public final class RepositoryMapper {
 
     @NonNull
     public static RepositoryItem map(@NonNull final RepositoryJson json) {
+
         return RepositoryItem.newBuilder()
                 .withId(json.getId())
                 .withName(json.getName())
                 .withDescription(json.getDescription())
+                .withStarCount(json.getStarCount())
                 .build();
     }
 
     @NonNull
-    public static List<RepositoryItem> mapList(@NonNull final RepositoriesResponseJson json) {
-        return Stream.ofNullable(json.getItems())
+    public static List<RepositoryItem> mapListFromRepositoriesResponse(@NonNull final RepositoriesResponseJson json) {
+        return mapList(json.getItems());
+    }
+
+    @NonNull
+    public static List<RepositoryItem> mapList(@NonNull final List<RepositoryJson> jsonList) {
+        return Stream.ofNullable(jsonList)
                 .withoutNulls()
                 .map(repositoryJson -> {
                     try {
@@ -41,5 +48,13 @@ public final class RepositoryMapper {
                 })
                 .withoutNulls()
                 .toList();
+    }
+
+    @NonNull
+    public static Long mapListToStarsCount(@NonNull final List<RepositoryJson> jsonList) {
+        return Stream.of(jsonList)
+                .withoutNulls()
+                .mapToLong(RepositoryJson::getStarCount)
+                .sum();
     }
 }

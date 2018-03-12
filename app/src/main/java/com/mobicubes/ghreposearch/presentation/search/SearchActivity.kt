@@ -1,43 +1,50 @@
 package com.mobicubes.ghreposearch.presentation.search
 
+import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.mobicubes.ghreposearch.MyApplication
 import com.mobicubes.ghreposearch.R
 import com.mobicubes.ghreposearch.databinding.ViewSearchBinding
+import com.mobicubes.ghreposearch.domain.entity.UserItem
 import com.mobicubes.ghreposearch.presentation.search.di.SearchActivityModule
 import com.mobicubes.ghreposearch.presentation.search.presenter.SearchPresenter
 import com.mobicubes.ghreposearch.presentation.search.view.SearchView
+import com.mobicubes.ghreposearch.presentation.search.view.viewmodel.SearchViewModel
+import com.mobicubes.ghreposearch.presentation.userdetail.UserDetailActivity
+import com.mobicubes.ghreposearch.presentation.userdetail.param.UserDetailParam
 import javax.inject.Inject
 
 class SearchActivity : AppCompatActivity(), SearchView {
 
     private lateinit var binding: ViewSearchBinding
 
-    override fun search() {
-        return
-    }
-
     @Inject lateinit var presenter: SearchPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.view_search)
 
         (applicationContext as MyApplication).appComponent
                 .plus(SearchActivityModule(this))
                 .inject(this)
 
-        setListener(presenter)
-        setViewModel()
+        binding = DataBindingUtil.setContentView(this, R.layout.view_search)
+
+        presenter.onCreate()
+    }
+
+    override fun goToUserDetail(user: UserItem) {
+        val intent = Intent(this, UserDetailActivity::class.java)
+        intent.putExtra(UserDetailActivity.EXTRA, UserDetailParam(user))
+        startActivity(intent)
     }
 
     override fun setListener(listener: SearchView.Listener) {
         binding.listener = listener
     }
 
-    fun setViewModel() {
-        binding.viewModel = presenter.viewModel
+    override fun setViewModel(viewModel: SearchViewModel) {
+        binding.viewModel = viewModel
     }
 }

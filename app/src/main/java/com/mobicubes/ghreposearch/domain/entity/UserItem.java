@@ -5,11 +5,13 @@ import android.support.annotation.Nullable;
 
 import com.mobicubes.ghreposearch.util.Preconditions;
 
+import java.io.Serializable;
+
 /**
  * Created by kuba on 10/03/2018.
  */
 
-public class UserItem {
+public class UserItem implements Serializable {
 
     @NonNull
     private final Long id;

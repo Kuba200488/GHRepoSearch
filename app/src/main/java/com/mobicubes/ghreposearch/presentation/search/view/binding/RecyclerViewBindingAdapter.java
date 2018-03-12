@@ -10,6 +10,10 @@ import android.support.v7.widget.RecyclerView;
 
 public final class RecyclerViewBindingAdapter {
 
+    private RecyclerViewBindingAdapter() {
+        //no-op
+    }
+
     @BindingAdapter("adapter")
     public static void setAdapter(
             @NonNull final RecyclerView recyclerView,

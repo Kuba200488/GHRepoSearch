@@ -7,7 +7,9 @@ import com.mobicubes.ghreposearch.domain.interactor.SearchRepositoriesUseCase
 import com.mobicubes.ghreposearch.domain.interactor.SearchUsersUseCase
 import com.mobicubes.ghreposearch.presentation.search.view.SearchView
 import com.mobicubes.ghreposearch.presentation.search.view.viewmodel.ItemViewModel
+import com.mobicubes.ghreposearch.presentation.search.view.viewmodel.RepositoryViewModel
 import com.mobicubes.ghreposearch.presentation.search.view.viewmodel.SearchViewModel
+import com.mobicubes.ghreposearch.presentation.search.view.viewmodel.UserViewModel
 import io.reactivex.observers.DisposableObserver
 
 /**
@@ -23,11 +25,19 @@ class SearchPresenter(
     var repositories: List<RepositoryItem>? = null
     var users: List<UserItem>? = null
 
-    override fun onItemClick(item: ItemViewModel) {
-        Log.d("ITEM_CLICKED", item.title)
+    val viewModel: SearchViewModel = SearchViewModel(this)
+
+    fun onCreate() {
+        view.setListener(this)
+        view.setViewModel(viewModel)
     }
 
-    val viewModel: SearchViewModel = SearchViewModel(this)
+    override fun onItemClick(item: ItemViewModel) {
+        when (item) {
+            is UserViewModel -> view.goToUserDetail(item.user)
+            else -> return
+        }
+    }
 
     override fun onQueryChanged(query: String) {
         searchResults(query)
@@ -69,10 +79,10 @@ class SearchPresenter(
 
         val joined = ArrayList<ItemViewModel>()
 
-        joined.addAll(users!!.map { ItemViewModel(it) })
-        joined.addAll(repositories!!.map { ItemViewModel(it) })
+        joined.addAll(users!!.map { UserViewModel(it) })
+        joined.addAll(repositories!!.map { RepositoryViewModel(it) })
 
-        viewModel.updateItems(joined.sortedWith(compareBy(ItemViewModel::id)))
+        viewModel.updateItems(joined.sortedWith(compareBy(ItemViewModel::getId)))
     }
 
     private fun clearLists() {

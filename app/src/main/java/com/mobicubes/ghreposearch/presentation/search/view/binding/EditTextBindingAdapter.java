@@ -1,6 +1,7 @@
 package com.mobicubes.ghreposearch.presentation.search.view.binding;
 
 import android.databinding.BindingAdapter;
+import android.support.annotation.NonNull;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.EditText;
@@ -11,10 +12,14 @@ import android.widget.EditText;
 
 public final class EditTextBindingAdapter {
 
+    private EditTextBindingAdapter() {
+        //no-op
+    }
+
     @BindingAdapter("onTextChanged")
     public static void onTextChanged(
-            EditText editText,
-            TextChangedListener listener
+            @NonNull final EditText editText,
+            @NonNull final TextChangedListener listener
     ) {
         editText.addTextChangedListener(new TextWatcher() {
             @Override

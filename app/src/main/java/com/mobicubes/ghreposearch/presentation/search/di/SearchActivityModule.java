@@ -26,7 +26,7 @@ public class SearchActivityModule {
 
     @Provides
     public SearchView provideView() {
-        return new SearchActivity();
+        return activity;
     }
 
     @Provides
@@ -34,7 +34,7 @@ public class SearchActivityModule {
             @NonNull final SearchView view,
             @NonNull final SearchUsersUseCase searchUsersUseCase,
             @NonNull final SearchRepositoriesUseCase searchRepositoriesUseCase
-            ) {
+    ) {
         return new SearchPresenter(
                 view,
                 searchUsersUseCase,

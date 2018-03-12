@@ -3,11 +3,11 @@ package com.mobicubes.ghreposearch.presentation.search
 import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import com.mobicubes.ghreposearch.MyApplication
 import com.mobicubes.ghreposearch.R
 import com.mobicubes.ghreposearch.databinding.ViewSearchBinding
 import com.mobicubes.ghreposearch.domain.entity.UserItem
+import com.mobicubes.ghreposearch.presentation.BaseActivity
 import com.mobicubes.ghreposearch.presentation.search.di.SearchActivityModule
 import com.mobicubes.ghreposearch.presentation.search.presenter.SearchPresenter
 import com.mobicubes.ghreposearch.presentation.search.view.SearchView
@@ -16,7 +16,7 @@ import com.mobicubes.ghreposearch.presentation.userdetail.UserDetailActivity
 import com.mobicubes.ghreposearch.presentation.userdetail.param.UserDetailParam
 import javax.inject.Inject
 
-class SearchActivity : AppCompatActivity(), SearchView {
+class SearchActivity : BaseActivity(), SearchView {
 
     private lateinit var binding: ViewSearchBinding
 

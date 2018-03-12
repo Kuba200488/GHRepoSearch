@@ -2,10 +2,10 @@ package com.mobicubes.ghreposearch.presentation.userdetail
 
 import android.databinding.DataBindingUtil
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import com.mobicubes.ghreposearch.MyApplication
 import com.mobicubes.ghreposearch.R
 import com.mobicubes.ghreposearch.databinding.ViewUserDetailBinding
+import com.mobicubes.ghreposearch.presentation.BaseActivity
 import com.mobicubes.ghreposearch.presentation.userdetail.di.UserDetailActivityModule
 import com.mobicubes.ghreposearch.presentation.userdetail.param.UserDetailParam
 import com.mobicubes.ghreposearch.presentation.userdetail.presenter.UserDetailPresenter
@@ -16,7 +16,7 @@ import javax.inject.Inject
 /**
  * Created by kuba on 11/03/2018.
  */
-class UserDetailActivity : AppCompatActivity(), UserDetailView {
+class UserDetailActivity : BaseActivity(), UserDetailView {
 
     companion object {
         val EXTRA = "USER_DETAIL_EXTRA"

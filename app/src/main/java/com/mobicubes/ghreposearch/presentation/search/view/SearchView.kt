@@ -16,6 +16,8 @@ interface SearchView {
 
     fun goToUserDetail(user: UserItem)
 
+    fun displayMessage(message: String)
+
     interface Listener {
         fun onQueryChanged(query: String)
         fun onItemClick(item: ItemViewModel)

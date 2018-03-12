@@ -1,6 +1,5 @@
 package com.mobicubes.ghreposearch.presentation.search.presenter
 
-import android.util.Log
 import com.mobicubes.ghreposearch.domain.entity.RepositoryItem
 import com.mobicubes.ghreposearch.domain.entity.UserItem
 import com.mobicubes.ghreposearch.domain.interactor.SearchRepositoriesUseCase
@@ -10,6 +9,7 @@ import com.mobicubes.ghreposearch.presentation.search.view.viewmodel.ItemViewMod
 import com.mobicubes.ghreposearch.presentation.search.view.viewmodel.RepositoryViewModel
 import com.mobicubes.ghreposearch.presentation.search.view.viewmodel.SearchViewModel
 import com.mobicubes.ghreposearch.presentation.search.view.viewmodel.UserViewModel
+import com.mobicubes.ghreposearch.util.ErrorMapper
 import io.reactivex.observers.DisposableObserver
 
 /**
@@ -45,30 +45,35 @@ class SearchPresenter(
 
     private fun searchResults(query: String) {
         clearLists()
-        Log.d("USECASE", "Executing: $query")
         searchUsersUseCase.execute(query, object : DisposableObserver<List<UserItem>>() {
-            override fun onError(e: Throwable) {}
+            override fun onError(e: Throwable) {
+                displayError(e)
+            }
 
             override fun onComplete() {}
 
             override fun onNext(t: List<UserItem>) {
-                Log.d("USECASE", "RECEIVED ${t.size}")
                 users = t
                 updateViewModel()
             }
         })
 
         searchRepositoriesUseCase.execute(query, object : DisposableObserver<List<RepositoryItem>>() {
-            override fun onError(e: Throwable) {}
+            override fun onError(e: Throwable) {
+                displayError(e)
+            }
 
             override fun onComplete() {}
 
             override fun onNext(t: List<RepositoryItem>) {
-                Log.d("RECEIVED", "${t.size}")
                 repositories = t
                 updateViewModel()
             }
         })
+    }
+
+    private fun displayError(e: Throwable) {
+        view.displayMessage("Error: ${ErrorMapper.mapThrowable(e)}")
     }
 
     private fun updateViewModel() {

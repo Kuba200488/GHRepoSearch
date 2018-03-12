@@ -5,6 +5,7 @@ import com.mobicubes.ghreposearch.domain.interactor.GetStarsCountUseCase
 import com.mobicubes.ghreposearch.presentation.userdetail.param.UserDetailParam
 import com.mobicubes.ghreposearch.presentation.userdetail.view.UserDetailView
 import com.mobicubes.ghreposearch.presentation.userdetail.view.viewmodel.UserDetailViewModel
+import com.mobicubes.ghreposearch.util.ErrorMapper
 import io.reactivex.observers.DisposableObserver
 
 /**
@@ -22,7 +23,9 @@ class UserDetailPresenter(
         view.setViewModel(viewModel)
 
         getFollowersCountUseCase.execute(param.user.login, object : DisposableObserver<Long>() {
-            override fun onError(e: Throwable) {}
+            override fun onError(e: Throwable) {
+                displayError(e)
+            }
 
             override fun onComplete() {}
 
@@ -32,7 +35,9 @@ class UserDetailPresenter(
         })
 
         getStarsCountUseCase.execute(param.user.login, object : DisposableObserver<Long>() {
-            override fun onError(e: Throwable) {}
+            override fun onError(e: Throwable) {
+                displayError(e)
+            }
 
             override fun onComplete() {}
 
@@ -40,5 +45,9 @@ class UserDetailPresenter(
                 viewModel.starsCount = t
             }
         })
+    }
+
+    private fun displayError(e: Throwable) {
+        view.displayMessage("Error: ${ErrorMapper.mapThrowable(e)}")
     }
 }
